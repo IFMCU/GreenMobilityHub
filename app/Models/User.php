@@ -74,4 +74,13 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+        /**
+     * USER OFFER OBJECT
+     */
+    public function user_offer()
+    {
+        return $this->belongsToMany(Offer::class)->withPivot('amount');
+    }
+
 }

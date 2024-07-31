@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Assistant;
+use App\Models\Offer;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\UserCourse;
@@ -24,7 +25,6 @@ class UserController extends Controller
     public function insertData(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'guid' => 'required|string|max:40',
             'name' => 'required|string',
             'phone_number' => 'nullable|string',
             'email' => 'required|string',
@@ -35,7 +35,6 @@ class UserController extends Controller
             return ResponseController::getResponse(null, 422, $validator->errors()->first());
         }
         $data = User::create([
-            'guid' => $request['guid'],
             'phone_number' => $request['phone_number'],
             'name' => $request['name'],
             'email' => $request['email'],
@@ -62,6 +61,7 @@ class UserController extends Controller
     {
         /// GET DATA
         $data = User::where('guid', '=', $guid)
+            ->with('user_offer')
             ->first();
 
         if (!isset($data)) {
@@ -70,6 +70,39 @@ class UserController extends Controller
 
         return ResponseController::getResponse($data, 200, 'Success');
     }
+
+    public function reedem(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'user_guid' => 'required|string|max:36',
+            'offer_guid' => 'required|string|max:36',
+            'point' => 'required|integer'
+
+        ], MessagesController::messages());
+        if ($validator->fails()) {
+            return ResponseController::getResponse(null, 422, $validator->errors()->first());
+        }
+        /// GET DATA
+        $user = User::where('guid', '=', $request['user_guid'])
+            ->first();
+
+        $offer = Offer::where('guid', '=', $request['offer_guid'])
+            ->first();
+        
+
+        if($user->point < $request['point']){
+            return ResponseController::getResponse(null, 400, "Point not Enough");
+        }
+        else{
+            $user->point=$user->point-$request['point'];
+            $offer->stock=$offer->stock-1;
+            $user->save();
+            $offer->save();
+        }
+
+        return ResponseController::getResponse(null, 200, 'Success');
+    }
+
     public function updateData(Request $request)
     {
         $validator = Validator::make($request->all(), [

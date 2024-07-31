@@ -5,8 +5,10 @@ use App\Http\Controllers\MerchantMasterController;
 use App\Http\Controllers\OtpController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CarbonHistoriesController;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\JarInputController;
+use App\Http\Controllers\OfferController;
 use App\Http\Controllers\ParkingLotController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserFormController;
@@ -140,6 +142,37 @@ Route::group([
     $router->post('/parkinglot', [ParkingLotController::class, 'insertData']);
     $router->put('/parkinglot', [ParkingLotController::class, 'updateData']);
     $router->delete('/parkinglot/{guid}', [ParkingLotController::class, 'deleteData']);
+});
+
+/**
+ * OFFER CONTROLLER
+ */
+Route::group([
+    'prefix' => $url,
+    'middleware' => 'jwt.verify'
+], function ($router) {
+    $router->get('/offer', [OfferController::class, 'index']);
+    $router->get('/offer/datatable', [OfferController::class, 'getAllDataTable']);
+    $router->post('/offer/reedem', [OfferController::class, 'reedem']);
+    $router->get('/offer/{guid}', [OfferController::class, 'getData']);
+    $router->post('/offer', [OfferController::class, 'insertData']);
+    $router->put('/offer', [OfferController::class, 'updateData']);
+    $router->delete('/offer/{guid}', [OfferController::class, 'deleteData']);
+});
+
+/**
+ * CARBON HISTORY CONTROLLER
+ */
+Route::group([
+    'prefix' => $url,
+    'middleware' => 'jwt.verify'
+], function ($router) {
+    $router->get('/carbonHistory', [CarbonHistoriesController::class, 'index']);
+    $router->get('/carbonHistory/datatable', [CarbonHistoriesController::class, 'getAllDataTable']);
+    $router->get('/carbonHistory/{guid}', [CarbonHistoriesController::class, 'getData']);
+    $router->post('/carbonHistory', [CarbonHistoriesController::class, 'insertData']);
+    $router->put('/carbonHistory', [CarbonHistoriesController::class, 'updateData']);
+    $router->delete('/carbonHistory/{guid}', [CarbonHistoriesController::class, 'deleteData']);
 });
 
 /**

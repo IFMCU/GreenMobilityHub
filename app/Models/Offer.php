@@ -30,6 +30,7 @@ class Offer extends Model
         'stock',
         'point',
         'description',
+        'file_url',
         'merchant_master_guid'
     ];
 

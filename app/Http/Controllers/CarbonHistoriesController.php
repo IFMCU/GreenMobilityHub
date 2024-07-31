@@ -95,6 +95,8 @@ class CarbonHistoriesController extends Controller
         } else {
             return 0;
         }
+
+        $files_url = $request->hasFile('files_url') ? $request->file('files_url')->store('attachments', 'public') : null;
     
         $data = CarbonHistory::create([
             'type' => $request->type,
@@ -103,7 +105,7 @@ class CarbonHistoriesController extends Controller
             'km_diff' => $kmdiff ,
             'carbon_total' => $hasil,
             'status' => $request->status,
-            'files_url' => $request->files_url,
+            'files_url' => $files_url,
             'user_guid' => $request->user_guid,
         ]);
 
@@ -154,6 +156,22 @@ class CarbonHistoriesController extends Controller
 
         $kmdiff = ($request->new_km - $request->old_km);
 
+        $files_url = $data->files_url;
+
+        if ($request->has('delete_file') && $request->delete_file == 1) {
+            if ($data->files_url) {
+                unlink("storage/" . $data->files_url);
+                $files_url = null;
+            }
+        } elseif ($request->hasFile('files_url')) {
+            if ($data->files_url) {
+                unlink("storage/" . $data->files_url);
+            }
+
+            
+            $files_url = $request->file('files_url')->store('attachments', 'public');
+        }
+
         if(array_key_exists($request->type, $emissionRates)) {
             $hasil = $emissionRates[$request->type] * $kmdiff;
         } else {
@@ -166,7 +184,7 @@ class CarbonHistoriesController extends Controller
         $data->new_km = $request->new_km;
         $data->km_diff =  $kmdiff;
         $data->carbon_total = $hasil;
-        $data->files_url = $request->files_url;
+        $data->files_url = $files_url;
         $data->status = $request->status;
         $data->user_guid = $request->user_guid;
         $data->save();
