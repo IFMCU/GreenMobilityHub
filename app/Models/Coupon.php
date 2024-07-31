@@ -56,10 +56,10 @@ class Coupon extends Model
     /**
      * USER OBJECT
      */
-    public function users()
-    {
-        return $this->belongsTo(User::class, 'user_guid', 'guid');
-    }
+    // public function users()
+    // {
+    //     return $this->belongsTo(User::class, 'user_guid', 'guid');
+    // }
 
     //  /**
     //  * OFFER OBJECT
