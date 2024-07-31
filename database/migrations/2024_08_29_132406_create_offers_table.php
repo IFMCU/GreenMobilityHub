@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('point');
             $table->longText('description');
             $table->longText('file_url');
-            $table->char('merchant_master_guid', 36)->index();
+            $table->char('merchant_master_guid',36)->index();
             $table->foreign('merchant_master_guid')->references('guid')->on('merchant_masters')->onDelete('cascade');
             $table->timestamps();
         });

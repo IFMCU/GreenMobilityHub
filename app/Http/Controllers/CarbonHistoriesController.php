@@ -69,7 +69,7 @@ class CarbonHistoriesController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'type' => 'required|string',
-            'old_km' => 'required|numeric',
+            'old_km' => 'nullable|numeric',
             'new_km' => 'required|numeric',
             'files_url.*' => 'nullable|file|mimes:jpg,jpeg,png|max:8192',
             'status'=>'required|string',
