@@ -340,6 +340,7 @@ class WhatsAppController extends Controller
                 'total' => $total,
                 'point' => floor($point),
                 'file_url' => $file_url,
+                'point_category_guid' => '2db04693-4eef-11ef-b8f8-075596f1f6fb',
                 'user_guid' => $user->guid
             ]);
         }
@@ -376,6 +377,7 @@ class WhatsAppController extends Controller
                 'total' => $total,
                 'point' => $this->calculatePoints($total),
                 'file_url' => $file_url,
+                'point_category_guid' => '2db03e04-4eef-11ef-b8f8-075596f1f6fb',
                 'user_guid' => $user->guid
             ]);
         }
