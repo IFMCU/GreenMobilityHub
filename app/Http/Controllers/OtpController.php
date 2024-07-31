@@ -58,7 +58,7 @@ class OtpController extends Controller
                 [
                     'From' => [
                         'Email' => '2172028@maranatha.ac.id',
-                        'Name' => 'Surpay'
+                        'Name' => 'Green Mobility Hub'
                     ],
                     'To' => [
                         [
@@ -139,7 +139,7 @@ class OtpController extends Controller
                     [
                         'From' => [
                             'Email' => '2172028@maranatha.ac.id',
-                            'Name' => 'Surpay'
+                            'Name' => 'Green Mobility Hub'
                         ],
                         'To' => [
                             [
