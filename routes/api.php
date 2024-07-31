@@ -6,6 +6,7 @@ use App\Http\Controllers\OtpController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CarbonHistoriesController;
+use App\Http\Controllers\CouponController;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\JarInputController;
 use App\Http\Controllers\OfferController;
@@ -158,6 +159,21 @@ Route::group([
     $router->post('/offer', [OfferController::class, 'insertData']);
     $router->put('/offer', [OfferController::class, 'updateData']);
     $router->delete('/offer/{guid}', [OfferController::class, 'deleteData']);
+});
+
+/**
+ * COUPON CONTROLLER
+ */
+Route::group([
+    'prefix' => $url,
+    'middleware' => 'jwt.verify'
+], function ($router) {
+    $router->get('/coupon', [CouponController::class, 'index']);
+    $router->get('/coupon/datatable', [CouponController::class, 'getAllDataTable']);
+    $router->get('/coupon/{guid}', [CouponController::class, 'getData']);
+    $router->post('/coupon', [CouponController::class, 'insertData']);
+    $router->put('/coupon', [CouponController::class, 'updateData']);
+    $router->delete('/coupon/{guid}', [CouponController::class, 'deleteData']);
 });
 
 /**
