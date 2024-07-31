@@ -2,18 +2,36 @@
     "name": "laravel/laravel",
     "type": "project",
     "description": "The skeleton application for the Laravel framework.",
-    "keywords": ["laravel", "framework"],
+    "keywords": [
+        "laravel",
+        "framework"
+    ],
     "license": "MIT",
     "require": {
         "php": "^8.1",
+        "beyondcode/laravel-dump-server": "^1.0",
+        "cloudinary-labs/cloudinary-laravel": "^2.0",
         "guzzlehttp/guzzle": "^7.2",
+        "ipinfo/ipinfolaravel": "^2.6",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
+        "laravel/socialite": "^5.12",
         "laravel/tinker": "^2.8",
-        "php-open-source-saver/jwt-auth": "^2.3"
+        "laravel/ui": "^4.1",
+        "mailjet/laravel-mailjet": "^3.0",
+        "php-open-source-saver/jwt-auth": "^2.2",
+        "propaganistas/laravel-phone": "^5.3",
+        "ramsey/uuid": "^4.7",
+        "revolution/laravel-google-sheets": "^6.3",
+        "spatie/laravel-permission": "^6.3",
+        "thiagoalessio/tesseract_ocr": "^2.13",
+        "twilio/sdk": "^8.2",
+        "yajra/laravel-datatables": "^9.0",
+        "yajra/laravel-datatables-oracle": "^10.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
+        "laravel/breeze": "^1.29",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.18",
         "mockery/mockery": "^1.4.4",
