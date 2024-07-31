@@ -13,7 +13,7 @@ class OfferController extends Controller
     public function index(Request $request)
     {
 
-        $data = Offer::with('merchant_master')->orderBy('created_at', 'desc')
+        $data = Offer::with('merchant_masters')->orderBy('created_at', 'desc')
         ->get();
 
         return ResponseController::getResponse($data, 200, 'Success');
@@ -22,7 +22,7 @@ class OfferController extends Controller
     public function getData($guid)
     {
         /// GET DATA
-        $data = Offer::with('merchant_master')->where('guid', '=', $guid)
+        $data = Offer::with('merchant_masters')->where('guid', '=', $guid)
             ->first();
 
         if (!isset($data)) {
@@ -34,7 +34,7 @@ class OfferController extends Controller
 
     public function getAllDataTable()
     {
-        $data = Offer::with('merchant_master')->orderBy('created_at', 'desc')
+        $data = Offer::with('merchant_masters')->orderBy('created_at', 'desc')
             ->get();
 
         $dataTable = DataTables::of($data)
