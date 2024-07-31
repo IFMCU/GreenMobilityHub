@@ -146,6 +146,20 @@ class WhatsAppController extends Controller
             $carbonEmission = $this->calculateCarbonEmission($vehicleType, $distance);
 
             if ($carbonEmission !== null) {
+                if($carbonEmission <=49){
+                    $fromClean = str_replace('whatsapp:', '', $from);
+                    $formattedPhoneNumber = $this->formatPhoneNumberToLocal($fromClean);
+                    $user = User::where('phone_number', $fromClean)->orWhere('phone_number', $formattedPhoneNumber)->first();
+            
+                    if ($user) {
+                        PointHistory::create([
+                            'total' => $carbonEmission,
+                            'point' => floor(49-$carbonEmission),
+                            'point_category_guid' => '2db04693-4eef-11ef-b8f8-075596f1f6fb',
+                            'user_guid' => $user->guid
+                        ]);
+                    }
+                }
                 $this->sendMessage($from, "Estimasi emisi karbon untuk $vehicleType dengan jarak tempuh $distance km adalah $carbonEmission kg CO2.");
             } else {
                 $this->sendMessage($from, 'Jenis kendaraan tidak valid. Ketik mobil, motor, atau bus diikuti dengan jarak tempuh dalam km. Contoh: mobil 15');
