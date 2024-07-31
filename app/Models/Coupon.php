@@ -61,11 +61,16 @@ class Coupon extends Model
         return $this->belongsTo(User::class);
     }
 
-     /**
-     * OFFER OBJECT
-     */
-    public function offer()
-    {
-        return $this->belongsTo(Offer::class);
-    }
+    //  /**
+    //  * OFFER OBJECT
+    //  */
+    // public function offer()
+    // {
+    //     return $this->belongsTo(Offer::class);
+    // }
+
+    // public function merchant_masters()
+    // {
+    //     return $this->belongsTo(MerchantMaster::class, 'merchant_master_guid', 'guid');
+    // }
 }
