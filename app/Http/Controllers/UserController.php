@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Assistant;
+use App\Models\Coupon;
 use App\Models\Offer;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -98,6 +99,11 @@ class UserController extends Controller
             $offer->stock=$offer->stock-1;
             $user->save();
             $offer->save();
+            Coupon::create([
+                'user_guid' => $request->user_guid,
+                'offer_guid' => $request->offer_guid,
+                'code'=> random_int(100000, 999999),
+            ]);
         }
 
         return ResponseController::getResponse(null, 200, 'Success');
