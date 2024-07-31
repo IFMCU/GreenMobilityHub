@@ -9,7 +9,7 @@ class CouponController extends Controller
 {
     public function index(Request $request)
     {
-        $data = Coupon::with('user','offer')->orderBy('created_at', 'desc')
+        $data = Coupon::orderBy('created_at', 'desc')
         ->get();
 
         return ResponseController::getResponse($data, 200, 'Success');
