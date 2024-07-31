@@ -54,7 +54,10 @@ class MerchantLocationController extends Controller
 
     public function getAllDataTable()
     {
-        $data = MerchantLocation::with('merchant_masters')->get();
+        // $data = MerchantLocation::with('merchant_masters')->get();
+        $data = MerchantLocation::with('merchant_masters')
+        ->orderBy('created_at', 'desc')
+        ->get();
 
         $dataTable = DataTables::of($data)
             ->addIndexColumn()

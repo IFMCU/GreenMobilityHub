@@ -54,8 +54,11 @@ class PointHistoryController extends Controller
 
     public function getAllDataTable()
     {
+        // $data = PointHistory::with('point_categories')
+        //     ->get();
         $data = PointHistory::with('point_categories')
-            ->get();
+                ->orderBy('created_at', 'desc')
+                ->get();
 
         $dataTable = DataTables::of($data)
             ->addIndexColumn()

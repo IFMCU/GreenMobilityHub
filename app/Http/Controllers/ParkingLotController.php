@@ -53,7 +53,9 @@ class ParkingLotController extends Controller
 
     public function getAllDataTable()
     {
-        $data = ParkingLot::get();
+        // $data = ParkingLot::get();
+        $data = ParkingLot::orderBy('created_at', 'desc')
+        ->get();
 
         $dataTable = DataTables::of($data)
             ->addIndexColumn()

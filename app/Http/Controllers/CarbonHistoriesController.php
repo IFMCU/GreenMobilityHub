@@ -54,7 +54,9 @@ class CarbonHistoriesController extends Controller
 
     public function getAllDataTable()
     {
-        $data = CarbonHistory::get();
+        // $data = CarbonHistory::get();
+        $data = CarbonHistory::orderBy('created_at', 'desc')
+        ->get();
 
         $dataTable = DataTables::of($data)
             ->addIndexColumn()

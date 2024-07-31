@@ -13,7 +13,8 @@ class MerchantMasterController extends Controller
     public function index(Request $request)
     {
 
-        $data = MerchantMaster::all();
+        $data = MerchantMaster::orderBy('created_at', 'desc')
+        ->get();
 
         return ResponseController::getResponse($data, 200, 'Success');
     }
