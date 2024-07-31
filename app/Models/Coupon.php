@@ -58,7 +58,7 @@ class Coupon extends Model
      */
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_guid', 'guid');
+        return $this->belongsTo(User::class);
     }
 
      /**
@@ -66,6 +66,6 @@ class Coupon extends Model
      */
     public function offer()
     {
-        return $this->belongsTo(Offer::class, 'offer_guid', 'guid');
+        return $this->belongsTo(Offer::class);
     }
 }
