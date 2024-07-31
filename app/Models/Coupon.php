@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\Uuid;
-use Google\Service\DriveActivity\User;
 
 class Coupon extends Model
 {
@@ -56,18 +55,18 @@ class Coupon extends Model
     /**
      * USER OBJECT
      */
-    // public function users()
-    // {
-    //     return $this->belongsTo(User::class, 'user_guid', 'guid');
-    // }
+    public function users()
+    {
+        return $this->belongsTo(User::class, 'user_guid', 'guid');
+    }
 
-    //  /**
-    //  * OFFER OBJECT
-    //  */
-    // public function offer()
-    // {
-    //     return $this->belongsTo(Offer::class);
-    // }
+     /**
+     * OFFER OBJECT
+     */
+    public function offer()
+    {
+        return $this->belongsTo(Offer::class);
+    }
 
     // public function merchant_masters()
     // {
