@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('table_otps', function (Blueprint $table) {
+        Schema::create('otps', function (Blueprint $table) {
             $table->uuid('guid')->primary();
             $table->string('otp');
             $table->char('user_guid',36)->index();
             $table->foreign('user_guid')->references('guid')->on('users')->onDelete('cascade');
             $table->timestamps();
-        
         });
     }
 
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('table_otps');
+        Schema::dropIfExists('otps');
     }
 };
