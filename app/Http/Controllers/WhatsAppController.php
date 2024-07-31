@@ -118,11 +118,11 @@ class WhatsAppController extends Controller
     {
         $user = User::where('phone_number', str_replace('whatsapp:', '', $from))->first();
         switch ($body) {
-            case 'Carbon Calculator':
+            case 'Hitung Emisi Karbon':
                 $this->sendMessage($from, 'Anda memilih Carbon Emission Calculator. Ketik jenis kendaraan Anda (mobil, motor, bus) dan jarak tempuh dalam km. Contoh: mobil 15');
                 $this->setUserState($from, 'carbon_calculator');
                 break;
-            case 'OCR Upload Receipt':
+            case 'Tambah Point':
                 $this->sendMessage($from, 'Silakan unggah gambar tanda terima untuk diproses oleh OCR.');
                 $this->setUserState($from, 'awaiting_image');
                 break;
@@ -177,7 +177,7 @@ class WhatsAppController extends Controller
         $twilio->messages->create(
             $to,
             [
-                "contentSid" => "HXdb8be527cb8afbc187a8b241a7348ee5",
+                "contentSid" => "HX138d65231f0ff2284811d6459f782741",
                 "from" => "whatsapp:" . env('TWILIO_WHATSAPP_NUMBER'),
                 "messagingServiceSid" => env('TWILIO_MESSAGING_SERVICE_SID'), // optional, jika menggunakan messaging service
             ]
@@ -302,25 +302,25 @@ class WhatsAppController extends Controller
         if (preg_match($ridePattern, $text, $matches)) {
             $rideDistance = str_replace(',', '.', $matches[1]);
             $rideDistance = floatval($rideDistance);
-            $responseMessage .= "Total ride detected: " . number_format($rideDistance, 2, '.', '') . " km\n";
+            $responseMessage .= "Total terdeteksi sepeda: " . number_format($rideDistance, 2, '.', '') . " km\n\n Total poin yang didapatkan: ". floor(number_format($rideDistance, 2, '.', '')) . " poin";
         }
 
         if (preg_match($distancePattern, $text, $matches)) {
             $actualDistance = str_replace(',', '.', $matches[1]);
             $actualDistance = floatval($actualDistance);
-            $responseMessage .= "Total distance detected: " . number_format($actualDistance, 2, '.', '') . " km\n";
+            $responseMessage .= "Total terdeteksi jalan: " . number_format($actualDistance, 2, '.', '') . " km\n\n Total poin yang didapatkan: ". floor(number_format($actualDistance, 2, '.', '')) . " poin";
         }
 
         if (preg_match($runPattern, $text, $matches)) {
             $runs = str_replace(',', '.', $matches[1]);
             $runs = floatval($runs);
-            $responseMessage .= "Total run distance detected: " . number_format($runs, 2, '.', '') . " km\n";
+            $responseMessage .= "Total terdeteksi lari: " . number_format($runs, 2, '.', '') . " km\n\n Total poin yang didapatkan: ". floor(number_format($runs, 2, '.', '')) . " poin";
         }
 
         if ($rideDistance || $actualDistance || $runs) {
             $this->storeStravaPointHistory($from, $rideDistance, $actualDistance, $runs, $imagePath);
         } else {
-            $responseMessage .= "No ride, distance, or run information found.\n";
+            $responseMessage .= "Tidak ada informasi perjalanan, jarak, atau lari yang ditemukan.\n";
         }
 
         return $responseMessage;
@@ -357,10 +357,10 @@ class WhatsAppController extends Controller
             $numberWithCommas = str_replace(',', '', $numberWithCommas);
             $total = floatval($numberWithCommas);
 
-            $responseMessage = "Total detected: Rp " . number_format($total, 0, ',', '.') . "\nTotal points earned: " . $this->calculatePoints($total);
+            $responseMessage = "Total terdeteksi: Rp " . number_format($total, 0, ',', '.') . "\nTotal point didapatkan: " . $this->calculatePoints($total);
             $this->storePointHistory($from, $total, $imagePath);
         } else {
-            $responseMessage = "No matching total found.";
+            $responseMessage = "Tidak ditemukan total yang cocok.";
         }
         return $responseMessage;
     }
