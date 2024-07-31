@@ -153,7 +153,7 @@ Route::group([
 ], function ($router) {
     $router->get('/offer', [OfferController::class, 'index']);
     $router->get('/offer/datatable', [OfferController::class, 'getAllDataTable']);
-    $router->post('/offer/reedem', [OfferController::class, 'reedem']);
+    $router->post('/offer/reedem', [UserController::class, 'reedem']);
     $router->get('/offer/{guid}', [OfferController::class, 'getData']);
     $router->post('/offer', [OfferController::class, 'insertData']);
     $router->put('/offer', [OfferController::class, 'updateData']);
