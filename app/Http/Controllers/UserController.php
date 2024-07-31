@@ -6,6 +6,7 @@ use App\Models\Assistant;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\UserCourse;
+use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Hash;
