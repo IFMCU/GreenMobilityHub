@@ -18,6 +18,8 @@ return new class extends Migration
             $table->integer('new_km');
             $table->integer('km_diff');
             $table->integer('carbon_total');
+            $table->text('files_url')->nullable();
+            $table->enum('status',['approved', 'waiting', 'rejected'])->default('waiting');
             $table->char('user_guid',36)->index();
             $table->foreign('user_guid')->references('guid')->on('users')->onDelete('cascade');
             $table->timestamps();

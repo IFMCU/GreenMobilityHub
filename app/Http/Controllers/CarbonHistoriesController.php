@@ -69,6 +69,8 @@ class CarbonHistoriesController extends Controller
             'type' => 'required|string',
             'old_km' => 'required|numeric',
             'new_km' => 'required|numeric',
+            'files_url.*' => 'nullable|file|mimes:jpg,jpeg,png|max:8192',
+            'status'=>'required|string',
             'user_guid' => 'required|uuid|exists:users,guid',
         ], MessagesController::messages());
     
@@ -98,10 +100,12 @@ class CarbonHistoriesController extends Controller
             'new_km' => $request->new_km,
             'km_diff' => $kmdiff ,
             'carbon_total' => $hasil,
+            'status' => $request->status,
+            'files_url' => $request->files_url,
             'user_guid' => $request->user_guid,
         ]);
 
-        if($hasil <=49){
+        if($hasil <=49 && $request->status == 'approved'){
             PointHistory::create([
                 'total' => $kmdiff,
                 'point' => floor(49-$hasil),
@@ -122,8 +126,8 @@ class CarbonHistoriesController extends Controller
             'type' => 'required|string',
             'old_km' => 'required|numeric',
             'new_km' => 'required|numeric',
-            'km_diff' => 'required|numeric',
-            'carbon_total' => 'required|numeric',
+            'files_url.*' => 'nullable|file|mimes:jpg,jpeg,png|max:8192',
+            'status'=>'required|string',
             'user_guid' => 'required|uuid|exists:users,guid',
         ], MessagesController::messages());
     
@@ -137,13 +141,31 @@ class CarbonHistoriesController extends Controller
         if (!$data) {
             return ResponseController::getResponse(null, 400, "Data not found");
         }
+
+        $emissionRates = [
+            'mobil' => 0.21,
+            'motor' => 0.1,
+            'bus' => 0.27
+        ];
+
+        $hasil =0;
+
+        $kmdiff = ($request->new_km - $request->old_km);
+
+        if(array_key_exists($request->type, $emissionRates)) {
+            $hasil = $emissionRates[$request->type] * $kmdiff;
+        } else {
+            return 0;
+        }
     
         // Update data
         $data->type = $request->type;
         $data->old_km = $request->old_km;
         $data->new_km = $request->new_km;
-        $data->km_diff = $request->km_diff;
-        $data->carbon_total = $request->carbon_total;
+        $data->km_diff =  $kmdiff;
+        $data->carbon_total = $hasil;
+        $data->files_url = $request->files_url;
+        $data->status = $request->status;
         $data->user_guid = $request->user_guid;
         $data->save();
     

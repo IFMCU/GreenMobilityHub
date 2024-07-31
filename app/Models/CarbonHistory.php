@@ -31,6 +31,8 @@ class CarbonHistory extends Model
         'new_km',
         'km_diff',
         'carbon_total',
+        'status',
+        'files_url',
         'user_guid'
     ];
 

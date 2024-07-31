@@ -147,11 +147,11 @@ class WhatsAppController extends Controller
 
             if ($carbonEmission <49) {
 
-                $this->sendMessage($from, "Estimasi emisi karbon untuk $vehicleType dengan jarak tempuh $distance km adalah $carbonEmission kg CO2.\n\n Perkiraan poin Anda bertambah ".floor(49-$carbonEmission)." point");
+                $this->sendMessage($from, "Estimasi emisi karbon untuk $vehicleType dengan jarak tempuh $distance km adalah $carbonEmission kg CO2.\n\nPerkiraan poin Anda bertambah ".floor(49-$carbonEmission)." point");
 
             } elseif($carbonEmission >=49){
 
-                $this->sendMessage($from, "Estimasi emisi karbon untuk $vehicleType dengan jarak tempuh $distance km adalah $carbonEmission kg CO2.\n\n Perkiraan poin Anda bertambah ".floor(0)." point");
+                $this->sendMessage($from, "Estimasi emisi karbon untuk $vehicleType dengan jarak tempuh $distance km adalah $carbonEmission kg CO2.\n\nPerkiraan poin Anda bertambah ".floor(0)." point");
 
             } else {
                 $this->sendMessage($from, 'Jenis kendaraan tidak valid. Ketik mobil, motor, atau bus diikuti dengan jarak tempuh dalam km. Contoh: mobil 15');
